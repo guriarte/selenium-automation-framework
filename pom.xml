@@ -4,6 +4,18 @@
   <groupId>com.framework</groupId>
   <artifactId>selenium-automation-framework</artifactId>
   <packaging>jar</packaging>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <version>1.0-SNAPSHOT</version>
   <name>selenium-automation-framework</name>
   <url>http://maven.apache.org</url>
@@ -30,6 +42,12 @@
       <artifactId>junit-jupiter</artifactId>
       <version>RELEASE</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>RELEASE</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
