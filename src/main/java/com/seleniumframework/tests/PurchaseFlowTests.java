@@ -1,53 +1,42 @@
-package com.framework.tests;
+package com.seleniumframework.tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import com.seleniumframework.pages.HomePage;
+import com.seleniumframework.pages.LoginPage;
 import junit.framework.Assert;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
 
 
-public class PurchaseFlowTests {
+public class PurchaseFlowTests extends BaseTest {
+    private static final Logger log = LoggerFactory.getLogger(PurchaseFlowTests.class);
     private WebDriver driver;
-
-    @BeforeAll
-    static void setupAll() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @BeforeEach
-    void setup() {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-        driver.manage().window().maximize();
-    }
-
-    @AfterEach
-    void teardown() {
-        driver.quit();
-    }
 
     @Test
     public void testPurchaseFlowEndToEnd() {
-        driver.get("http://localhost:4200/");
-        WebElement signInButton = driver.findElement(By.cssSelector("[data-test=\"nav-sign-in\"]"));
-        signInButton.click();
+        HomePage homePage = new HomePage(driver, waitUtils);
+        LoginPage loginPage = new LoginPage(driver, waitUtils);
+        homePage.visit();
+        homePage.clickSignInButton();
 
-        WebElement emailTextBox = driver.findElement(By.cssSelector("[data-test=\"email\"]"));
-        emailTextBox.sendKeys("customer@practicesoftwaretesting.com");
+//        WebElement emailTextBox = driver.findElement(By.cssSelector("[data-test=\"email\"]"));
+//        emailTextBox.sendKeys("customer@practicesoftwaretesting.com");
+        loginPage.fillEmailTextBox("customer@practicesoftwaretesting.com");
 
-        WebElement passwordTextBox = driver.findElement(By.cssSelector("[data-test=\"password\"]"));
-        passwordTextBox.sendKeys("welcome01");
+//        WebElement passwordTextBox = driver.findElement(By.cssSelector("[data-test=\"password\"]"));
+//        passwordTextBox.sendKeys("welcome01");
+        loginPage.fillPasswordTextBox("welcome01");
 
-        WebElement submitButton = driver.findElement(By.cssSelector("[data-test=\"login-submit\"]"));
-        submitButton.click();
-
+//        WebElement submitButton = driver.findElement(By.cssSelector("[data-test=\"login-submit\"]"));
+//        submitButton.click();
+        loginPage.clickSubmitButton();
         // add network call for login?
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlContains("/account"));
